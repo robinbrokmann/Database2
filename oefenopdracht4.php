@@ -1,6 +1,16 @@
 <html>
 <style>
-
+    form {
+        background: rgba(255, 252, 225, 0.7);
+        text-align: center;
+        width: 30%;
+        margin: 0 auto;
+        border: 1px black solid;
+    }
+    label{
+        display: inline-block;
+        width: 100px;
+        margin-bottom: 10px;
 </style>
 <body>
 <?php
