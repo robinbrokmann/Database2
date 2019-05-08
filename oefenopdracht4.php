@@ -1,7 +1,11 @@
 <html>
 <style>
+    body {
+        background-image: url("background.jpg");
+        background-size: cover;
+    }
     form {
-        background: rgba(255, 252, 225, 0.7);
+        background: rgba(255, 255, 255, 0.5);
         text-align: center;
         width: 30%;
         margin: 0 auto;

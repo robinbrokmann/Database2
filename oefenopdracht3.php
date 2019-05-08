@@ -1,10 +1,19 @@
 <html>
 <style>
+    body {
+        background-image: url("background.jpg");
+        background-size: cover;
+    }
     table {
         background: rgba(255, 255, 255, 0.5);
         margin-left: auto;
         margin-right: auto;
         border: 1px black solid;
+    }
+    div {
+        font-size: 25px;
+        text-align: center;
+        color: white;
     }
 </style>
 <body>
@@ -49,8 +58,10 @@ $result->free();
 $conn->close();
 ?>
 
+<div style="margin-top: 20px">
 <form action="" method="post">
     <input type="submit" name="submit" value="nummer toevoegen">
 </form>
+</div>
 </body>
 </html>
