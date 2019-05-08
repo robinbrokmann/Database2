@@ -20,7 +20,6 @@
 </style>
 <body>
 <?php
-
 if(isset($_POST['back'])) {
     header("Location:Oefenopdracht3.php");
     exit();
