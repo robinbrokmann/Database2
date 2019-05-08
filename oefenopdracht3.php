@@ -5,13 +5,15 @@
         background-size: cover;
     }
     table {
-        background: rgba(255, 255, 255, 0.5);
+        font-size: 27px;
+        background: rgba(202, 248, 255, 0.5);
+        opacity: 0.5;
         margin-left: auto;
         margin-right: auto;
         border: 1px black solid;
     }
     div {
-        font-size: 25px;
+        font-size: 30px;
         text-align: center;
         color: white;
     }
