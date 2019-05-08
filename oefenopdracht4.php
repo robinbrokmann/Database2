@@ -7,7 +7,7 @@
     form {
         font-size: 27px;
         background: rgba(202, 248, 255, 0.5);
-        opacity: 0.3;
+        opacity: 0.6;
         text-align: center;
         width: 30%;
         margin: 0 auto;

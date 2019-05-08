@@ -4,10 +4,10 @@
         background-image: url("background.jpg");
         background-size: cover;
     }
-    table {
+    table , td {
         font-size: 27px;
         background: rgba(202, 248, 255, 0.5);
-        opacity: 0.5;
+        opacity: 0.6;
         margin-left: auto;
         margin-right: auto;
         border: 1px black solid;
