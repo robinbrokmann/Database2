@@ -2,13 +2,12 @@
 <html>
 <style>
     body {
-        background-image: url("background.jpg");
+        background-image: url("verjaardag.jpg");
         background-size: cover;
     }
     form {
         font-size: 27px;
         background: rgba(202, 248, 255, 0.5);
-        opacity: 0.6;
         text-align: center;
         width: 30%;
         margin: 0 auto;
@@ -27,21 +26,23 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$artist = "";
-$title = "";
+$naam = "";
+$achternaam = "";
+$geboortedatum = "";
 $id = "";
 
 if (isset($_SESSION['id'])) {
     $id = $_SESSION['id'];
-    $sql = "SELECT * FROM songs where Id = $id;";
+    $sql = "SELECT * FROM verjaardagen where Id = $id;";
 
     if (!$result = $conn->query($sql)) {
         die('There was an error running the query [' . $conn->error . ']');
     }
 
     if ($row = $result->fetch_assoc()) {
-        $artist = $row['artist'];
-        $title = $row['title'];
+        $naam = $row['naam'];
+        $achternaam = $row['achternaam'];
+        $geboortedatum = $row['geboortedatum'];
     }
 }
 
@@ -49,36 +50,36 @@ echo
 
 $message = "";
 if ($id) {
-    $message = "Nummer Aanpassen";
+    $message = "Aanpassen";
 } else {
-    $message = "Nummer Toevoegen";
+    $message = "Toevoegen";
 }
-echo "</u><br>";
 
 if (isset($_POST['back'])) {
-    header("Location: opdracht5-overzicht.php");
+    header("Location: eindopdracht-overzicht.php");
     exit();
 } else if (isset($_POST['submit'])) {
-    $artist = mysqli_real_escape_string($conn, $_POST["artist"]);
-    $title = mysqli_real_escape_string($conn, $_POST["title"]);
-
+    $naam = mysqli_real_escape_string($conn, $_POST["naam"]);
+    $achternaam = mysqli_real_escape_string($conn, $_POST["achternaam"]);
+    $geboortedatum = strtotime(mysqli_real_escape_string($conn, $_POST["geboortedatum"]));
+    $geboortedatum = date("Y-m-d", $geboortedatum);
     if ($id) {
-        $sql = "UPDATE songs SET artist = '$artist', title = '$title' WHERE Id = '$id'";
+        $sql = "UPDATE verjaardagen SET naam = '$naam', achternaam = '$achternaam', geboortedatum = '$geboortedatum' WHERE Id = '$id'";
 
         if ($conn->query($sql) === TRUE) {
             echo "Record updated successfully";
-            header("Location: opdracht5-overzicht.php");
+            header("Location: eindopdracht-overzicht.php");
             $conn->close();
         } else {
             echo "Error: " . $sql . "<br>" . $conn->error;
             $conn->close();
         }
     } else {
-        $sql = "INSERT into songs (artist, title) values ('$artist', '$title')";
+        $sql = "INSERT into verjaardagen (naam, achternaam, geboortedatum) values ('$naam', '$achternaam', '$geboortedatum')";
 
         if ($conn->query($sql) === TRUE) {
             echo "New record created successfully";
-            header("Location: opdracht5-overzicht.php");
+            header("Location: eindopdracht-overzicht.php");
             $conn->close();
         } else {
             echo "Error: " . $sql . "<br>" . $conn->error;
@@ -91,10 +92,10 @@ if (isset($_POST['back'])) {
 
 
 <form action="" method="post">
-    <label>Artiest: </label><input style="margin-top: 10px;" type="text" name="artist" value="<?php echo $artist ?>"><br>
-    <label>Titel van nummer: </label><input type="text" name="title" value="<?php echo $title ?>"><br>
+    <label>Naam: </label><br><input style="margin-top: 10px;" type="text" name="naam" value="<?php echo $naam ?>"><br>
+    <label>Achternaam: </label><br><input type="text" name="achternaam" value="<?php echo $achternaam ?>"><br>
+    <label>Geboortedatum: </label><br><input type="text" name="geboortedatum" value="<?php echo $geboortedatum ?>"><br>
     <input style="margin-bottom: 10px" name="submit" type="submit" value="<?php echo $message?>">
     <input type="submit" name="back" value="Naar overzicht">
 </form>
 </body>
-</html>

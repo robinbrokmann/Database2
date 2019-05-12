@@ -6,13 +6,12 @@ session_unset()
 <html>
 <style>
     body {
-        background-image: url("background.jpg");
+        background-image: url("verjaardag.jpg");
         background-size: cover;
     }
     table , td {
         font-size: 27px;
         background: rgba(202, 248, 255, 0.5);
-        opacity: 0.6;
         margin-left: auto;
         margin-right: auto;
         border: 1px black solid;
@@ -35,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["id"] = $key[1];
         }
     }
-    header("Location: opdracht5-form.php");
+    header("Location: eindopdracht-form.php");
 
     exit();
 }
@@ -49,7 +48,7 @@ if($conn->connect_error){
     die("connection failed: " . $conn->connect_error);
 }
 $db = getDatabase();
-$sql = "SELECT * FROM songs";
+$sql = "SELECT * FROM verjaardagen";
 
 if (!$result = $conn->query($sql)) {
     die('There was an error running the query [' . $conn->error . ']');
@@ -58,16 +57,25 @@ if (!$result = $conn->query($sql)) {
 echo '<table>';
 
 echo '<tr>';
-echo '<th>Artiest</th>';
-echo '<th>Titel</th>';
+echo '<th>Naam</th>';
+echo '<th>Achternaam</th>';
+echo '<th>Geboortedatum</th>';
+echo '<th>Leeftijd</th>';
 echo '<th></th>';
 echo '<th></th>';
 echo '</tr>';
 
 while ($row = $result->fetch_assoc()) {
     echo '<tr>';
-    echo '<td>' . $row['artist'] . '</td>';
-    echo '<td>' . $row['title'] . '</td>';
+    echo '<td>' . $row['naam'] . '</td>';
+    echo '<td>' . $row['achternaam'] . '</td>';
+    $birthdate = $row['geboortedatum'];
+    $birthDateArray = explode("-", $birthdate);
+    echo '<td>' . $birthDateArray[2] . "-" . $birthDateArray[1] . "-" . $birthDateArray[0] . "</td>";
+    $date1 = new DateTime("now");
+    $date2 = new DateTime($birthdate);
+    $age = $date1 -> diff($date2);
+    echo '<td>' . $age->y . " Jaar, " . $age->m . " Maanden, " . $age->d . " Dagen" ."</td>";
     $id = $row['id'];
     echo "<form action='' method='post'>";
     echo "<td><input type='submit' name='edit-$id' value='wijzigen'>";
@@ -84,14 +92,14 @@ function deleteRecord($id)
 {
     $conn = getDatabase();
 
-    $sql = "DELETE from songs where Id = $id";
+    $sql = "DELETE from verjaardagen where Id = $id";
 
     if ($conn->query($sql) === TRUE) {
         echo "Record updated successfully";
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
-    header("Location: opdracht5-overzicht.php");
+    header("Location: eindopdracht-overzicht.php");
     exit();
 }
 function getDatabase(){
@@ -103,11 +111,11 @@ function getDatabase(){
     return $conn;
 }
 ?>
-?>
+
 
 <div style="margin-top: 20px">
     <form action="" method="post">
-        <input type="submit" name="submit" value="nummer toevoegen">
+        <input type="submit" name="submit" value="verjaardag toevoegen">
     </form>
 </div>
 </body>
