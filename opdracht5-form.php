@@ -45,7 +45,7 @@ if (isset($_SESSION['id'])) {
     }
 }
 
-echo "<div><u>";
+echo
 
 $message = "";
 if ($id) {
